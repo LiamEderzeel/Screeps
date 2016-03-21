@@ -1,3 +1,4 @@
+//var spawning = require('spawning');
 var harvester = require('harvester');
 var fixer = require('fixer');
 var builder = require('builder');
@@ -5,13 +6,13 @@ var guardian = require('guardian');
 //var guardian = require('organizer');
 
 module.exports.loop = function () {
-    
+
     for(var i in Memory.creeps){
         if(!Game.creeps[i]) {
             delete Memory.creeps[i];
         }
     }
-    
+
     function countProperties (obj) {
         var count = 0;
 
@@ -22,7 +23,7 @@ module.exports.loop = function () {
         }
         return count;
     }
-    
+
     function SpawnCreeps() {
         var harvesterCount = 0;
         var fixerCount = 0;
