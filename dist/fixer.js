@@ -19,32 +19,55 @@ module.exports = function (creep) {
 
         if (targets) {
             targets.sort((a,b) => a.hits - b.hits);
-            //console.log(targets);
             if(targets.length > 0) {
                 if(creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0]);
-                    //console.log("test");
+                    console.log("FixingRoad");
                 }
             }
         } else {
-            if (creep.room.controller.ticksToDowngrade < 15000 || creep.room.controller.level < 2) {
-                if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE){
-                    creep.moveTo(creep.room.controller);
+            var targets = creep.room.find(FIND_STRUCTURES, {
+                filter: function(object) {
+                    if(object.structureType != STRUCTURE_WALL ) {
+                        return false;
+                    }
+                    if(object.hits > 800) {
+                    //if(object.hits > 100) {
+                        return false;
+                    }
+                        return true;
+                    }
+            });
+
+            if (targets) {
+                targets.sort((a,b) => a.hits - b.hits);
+                if(targets.length > 0) {
+                    if(creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
+                        creep.moveTo(targets[0]);
+                        console.log("FixingWall");
+                    }
                 }
-            } else {
-    	        var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
-	            if(targets == 0)
-	            {
-    	            if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE){
+            }else{
+                if (creep.room.controller.ticksToDowngrade < 15000 || creep.room.controller.level < 2) {
+                    if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE){
                         creep.moveTo(creep.room.controller);
                     }
-    	        } else {
-	                if(targets.length) {
-		                if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
-		               	creep.moveTo(targets[0]);
-            	    	}
+                } else {
+        	        var targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+	                if(targets == 0)
+	                {
+        	            if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE){
+                            creep.moveTo(creep.room.controller);
+                        }
+        	        } else {
+	                    if(targets.length) {
+	    	                if(creep.build(targets[0]) == ERR_NOT_IN_RANGE) {
+	    	               	creep.moveTo(targets[0]);
+                            console.log("Building");
+                	    	}
+	                    }
 	                }
-	            }
+                }
             }
         }
     }
