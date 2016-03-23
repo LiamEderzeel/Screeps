@@ -3,10 +3,10 @@ var helpers = require('helpers');
 module.exports = function (creep) {
     if(creep.carry.energy == 0) {
         //console.log("no energy");
-        var targets = helpers.findStructures(creep, STRUCTURE_CONTAINER, 0.1);
+        var targets = helpers.findStructures(creep, STRUCTURE_CONTAINER);
 
         if(targets) {
-            if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+            if(targets[0].transfer(creep, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(targets[0]);
             }
         }

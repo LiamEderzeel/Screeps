@@ -37,7 +37,7 @@ module.exports = function (creep) {
                 }
             }
             else{
-                var targets = helpers.findStructures(creep, STRUCTURE_WALL, undefined, 0.5);
+                var targets = helpers.findStructures(creep, STRUCTURE_WALL, undefined, 0.000005);
 
                 if (targets) {
                     targets.sort((a,b) => a.hits - b.hits);

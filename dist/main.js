@@ -31,21 +31,5 @@ module.exports.loop = function () {
 
     defenseTower(targets[0]);
 
-    function energyAvaleble () {
-        if(requiredHarversters <= harvesterCount) {
-            return true;
-        }
-        return false;
-    }
-
-    function countProperties (obj) {
-        var count = 0;
-
-        for (var property in obj) {
-            if (Object.prototype.hasOwnProperty.call(obj, property))
-                count++;
-        }
-        return count;
-    }
 
 }
