@@ -1,15 +1,17 @@
 var creepManager = require('creepManager');
 var defenseTower = require('defenseTower');
 
-// Config
-Memory.roleCount = {};
-Memory.roleGoal = {};
-Memory.roleGoal.harvesterGoal = 3;
-Memory.roleGoal.fixerGoal = 2;
-Memory.roleGoal.builderGoal = 1;
-Memory.roleGoal.guardianGoal = 2;
-
 module.exports.loop = function () {
+    // Config
+    if(Memory.roleCount == null)
+        Memory.roleCount = {};
+    if(Memory.roleGoal == null)
+        Memory.roleGoal = {};
+    Memory.roleGoal.harvesterGoal = 3;
+    Memory.roleGoal.fixerGoal = 1;
+    Memory.roleGoal.builderGoal = 1;
+    Memory.roleGoal.transporterGoal = 1;
+    Memory.roleGoal.guardianGoal = 1;
     // clear memory form dead creeps
     for(var i in Memory.creeps){
         if(!Game.creeps[i]) {
@@ -18,6 +20,16 @@ module.exports.loop = function () {
     }
 
     creepManager();
+    var targets = Game.spawns.Spawn1.room.find(FIND_STRUCTURES, {
+        filter: function(object) {
+            if(object.structureType != STRUCTURE_TOWER ) {
+                return false;
+            }
+            return true;
+        }
+    });
+
+    defenseTower(targets[0]);
 
     function energyAvaleble () {
         if(requiredHarversters <= harvesterCount) {
@@ -35,4 +47,5 @@ module.exports.loop = function () {
         }
         return count;
     }
+
 }

@@ -26,8 +26,8 @@ module.exports = function () {
             builder(creep);
         }
         if(creep.memory.role == 'transporter'){
-            builderCount++;
-            builder(creep);
+            transporterCount++;
+            transporter(creep);
         }
         if(creep.memory.role == 'guardian'){
             guardianCount++;
@@ -35,27 +35,27 @@ module.exports = function () {
         }
     }
 
+    Memory.roleCount.harvesterCount = harvesterCount;
+    Memory.roleCount.fixerCount = fixerCount;
+    Memory.roleCount.builderCount = builderCount;
+    Memory.roleCount.guardianCount = guardianCount;
     if (Game.spawns.Spawn1.energy > 100) {
-        if(harvesterCount < 3) {
+        if(harvesterCount < Memory.roleGoal.harvesterGoal) {
             spawnCreep('harvester', 1);
         }
-        else if(fixerCount < 1) {
+        else if(fixerCount < Memory.roleGoal.fixerGoal) {
             spawnCreep('fixer', 1);
         }
-        else if(builderCount < 2){
-            spawnCreep('builder', 1);
-        }
-        else if(transportCount < 1) {
+        else if(transporterCount < Memory.roleGoal.transporterGoal) {
             spawnCreep('transporter', 1);
+        }
+        else if(builderCount < Memory.roleGoal.builderGoal){
+            spawnCreep('builder', 1);
         }
         // else if(guardianCount < 1){
         //     spawnCreep('guardian', 1);
         // }
     }
-    Memory.roleCount.harvesterCount = harvesterCount;
-    Memory.roleCount.fixerCount = fixerCount;
-    Memory.roleCount.builderCount = builderCount;
-    Memory.roleCount.guardianCount = guardianCount;
 
     function spawnCreep(creepType, creepLevel)
     {
